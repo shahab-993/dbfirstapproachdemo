@@ -16,6 +16,7 @@
                     <th>Quantity</th>
                     <th>Bill Amount</th>
                     <th>Running Total Per Report</th>
+                    <th>Running Total Per Order</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,12 +30,13 @@
                     <td>{{ $order['Quantity'] }}</td>
                     <td>{{ $order['BillAmount'] }}</td>
                     <td>{{ $order['RunningTotal'] }}</td>
+                    <td>{{ $order['RunningOrderTotal'] }}</td>
                    
                 </tr>
                     
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="7"></td>
                     <td>Grand Total</td>
                     <td>{{ $GrandTotal }}</td>
                 </tr>

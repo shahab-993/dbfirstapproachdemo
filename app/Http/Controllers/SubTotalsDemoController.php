@@ -7,36 +7,57 @@ use Illuminate\Support\Facades\DB;
 
 class SubTotalsDemoController extends Controller
 {
-    public function index(){
-        $newOrders=[];
-        $grandTotl=0;
-        $runningTotl=0;
+    public function index()
+    {
+        $newOrders = [];
+        $grandTotl = 0;
+        $runningTotl = 0;
+        $runningOrderTotal = 0;
+        $previousOrderId = 0;
 
-        $Orders= DB::select('CALL USP_GetAllOrders()');
+        $Orders = DB::select('CALL USP_GetAllOrders()');
 
-        foreach($Orders as $order){
-            $grandTotl += $order->BillAmount;
-            $runningTotl += $order->BillAmount;
+        foreach ($Orders as $order) {
 
-            $newOrders[] = $this->pushData($order,$runningTotl);
+            if ($previousOrderId == 0) {
+                $previousOrderId=$order->OrderID;
+
+                $grandTotl += $order->BillAmount;
+                $runningTotl += $order->BillAmount;
+                $runningOrderTotal += $order->BillAmount;
+                $newOrders[] = $this->pushData($order, $runningTotl,$runningOrderTotal);
+            } elseif ($previousOrderId == $order->OrderID) {
+                $grandTotl += $order->BillAmount;
+                $runningTotl += $order->BillAmount;
+                $runningOrderTotal += $order->BillAmount;
+                $newOrders[] = $this->pushData($order, $runningTotl,$runningOrderTotal);
+            } else {
+                $previousOrderId=$order->OrderID;
+                $runningOrderTotal=0;
+                $grandTotl += $order->BillAmount;
+                $runningTotl += $order->BillAmount;
+                $runningOrderTotal += $order->BillAmount;
+                $newOrders[] = $this->pushData($order, $runningTotl,$runningOrderTotal);
+            }
+
 
         }
-        return view('subtotaldemo.index',['Orders' => $newOrders, 'GrandTotal' => $grandTotl]);
-
+        return view('subtotaldemo.index', ['Orders' => $newOrders, 'GrandTotal' => $grandTotl]);
     }
 
-public function pushData($order,$runningTotl){
-    return[
-        'OrderID'=> $order->OrderID,
-        'OrderDate' => $order->OrderDate,
-        'CompanyName' => $order->CompanyName,
-        'ProductName' => $order->ProductName,
-        'UnitPrice' => $order->UnitPrice,
-        'Quantity' => $order->Quantity,
-        'BillAmount' => $order->BillAmount,
-        'RunningTotal'=>$runningTotl,
+    public function pushData($order, $runningTotl,$runningOrderTotal)
+    {
+        return [
+            'OrderID' => $order->OrderID,
+            'OrderDate' => $order->OrderDate,
+            'CompanyName' => $order->CompanyName,
+            'ProductName' => $order->ProductName,
+            'UnitPrice' => $order->UnitPrice,
+            'Quantity' => $order->Quantity,
+            'BillAmount' => $order->BillAmount,
+            'RunningTotal' => $runningTotl,
+            'RunningOrderTotal'=>$runningOrderTotal,
 
-    ];
-}
-
+        ];
+    }
 }
