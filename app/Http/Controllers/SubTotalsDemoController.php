@@ -32,6 +32,8 @@ class SubTotalsDemoController extends Controller
                 $runningOrderTotal += $order->BillAmount;
                 $newOrders[] = $this->pushData($order, $runningTotl,$runningOrderTotal);
             } else {
+                $newOrders[] = $this->pushData(0, 0,$runningOrderTotal);
+
                 $previousOrderId=$order->OrderID;
                 $runningOrderTotal=0;
                 $grandTotl += $order->BillAmount;
@@ -42,11 +44,26 @@ class SubTotalsDemoController extends Controller
 
 
         }
+                $newOrders[] = $this->pushData(0, 0,$runningOrderTotal);
+
         return view('subtotaldemo.index', ['Orders' => $newOrders, 'GrandTotal' => $grandTotl]);
     }
 
     public function pushData($order, $runningTotl,$runningOrderTotal)
     {
+   if ($order === 0) {
+    return [
+        'OrderID' => '',
+        'OrderDate' => '',
+        'CompanyName' => '',
+        'ProductName' => '',
+        'UnitPrice' => '',
+        'Quantity' => '',
+        'BillAmount' => '',
+        'RunningTotal' =>$runningOrderTotal,
+        'RunningOrderTotal' => '',
+    ];
+}
         return [
             'OrderID' => $order->OrderID,
             'OrderDate' => $order->OrderDate,

@@ -27,9 +27,33 @@
                     <td>{{ $order['CompanyName'] }}</td>
                     <td>{{ $order['ProductName'] }}</td>
                     <td>{{ $order['UnitPrice'] }}</td>
-                    <td>{{ $order['Quantity'] }}</td>
-                    <td>{{ $order['BillAmount'] }}</td>
-                    <td>{{ $order['RunningTotal'] }}</td>
+                    <!-- <td>{{ $order['Quantity'] }}</td> -->
+
+                    <td>
+                        @if ($order['Quantity']=='')
+                        <b style="white-space: nowrap;">Sub Total</b>
+                        @else
+                            {{ $order['Quantity'] }}
+                        @endif
+                    </td>
+                    <!-- <td>{{ $order['BillAmount'] }}</td> -->
+                     <td>
+                        @if ($order['BillAmount']== '')
+                        <b>{{ $order['RunningTotal'] }}</b>
+                        @else
+                        {{ $order['RunningTotal'] }}
+                            
+                        @endif
+                     </td>
+                    <!-- <td>{{ $order['RunningTotal'] }}</td> -->
+                     <td>
+                        @if ($order['BillAmount'] != '')
+                        {{ $order ['RunningTotal'] }}
+                            
+                 
+                            
+                        @endif
+                     </td>
                     <td>{{ $order['RunningOrderTotal'] }}</td>
                    
                 </tr>
