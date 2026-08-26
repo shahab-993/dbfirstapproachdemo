@@ -16,6 +16,7 @@
                     <th>Quantity</th>
                     <th>Bill Amount</th>
                     <th>Running Total Per Report</th>
+                    <th>Running Total Per Order</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,15 +27,40 @@
                     <td>{{ $order['CompanyName'] }}</td>
                     <td>{{ $order['ProductName'] }}</td>
                     <td>{{ $order['UnitPrice'] }}</td>
-                    <td>{{ $order['Quantity'] }}</td>
-                    <td>{{ $order['BillAmount'] }}</td>
-                    <td>{{ $order['RunningTotal'] }}</td>
+                    <!-- <td>{{ $order['Quantity'] }}</td> -->
+
+                    <td>
+                        @if ($order['Quantity']=='')
+                        <b style="white-space: nowrap;">Sub Total</b>
+                        @else
+                            {{ $order['Quantity'] }}
+                        @endif
+                    </td>
+                    <!-- <td>{{ $order['BillAmount'] }}</td> -->
+                     <td>
+                        @if ($order['BillAmount']== '')
+                        <b>{{ $order['RunningTotal'] }}</b>
+                        @else
+                        {{ $order['RunningTotal'] }}
+                            
+                        @endif
+                     </td>
+                    <!-- <td>{{ $order['RunningTotal'] }}</td> -->
+                     <td>
+                        @if ($order['BillAmount'] != '')
+                        {{ $order ['RunningTotal'] }}
+                            
+                 
+                            
+                        @endif
+                     </td>
+                    <td>{{ $order['RunningOrderTotal'] }}</td>
                    
                 </tr>
                     
                 @endforeach
                 <tr>
-                    <td colspan="5"></td>
+                    <td colspan="7"></td>
                     <td>Grand Total</td>
                     <td>{{ $GrandTotal }}</td>
                 </tr>
