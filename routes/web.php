@@ -10,4 +10,10 @@ Route::get('/', function () {
 Route::get('/subtotals',[SubTotalsDemoController::class,'index']);
 
 
+
 Route::get('/twolevelaccordion',[AccordionDemoController::class,'twoLevelAccordionDemo']);
+
+
+
+
+
