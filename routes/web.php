@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccordionDemoController;
 use App\Http\Controllers\CalculateController;
+use App\Http\Controllers\ChartDemoController;
 use App\Http\Controllers\SubTotalsDemoController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,8 @@ Route::get('/multilevelaccordion', [AccordionDemoController::class, 'multiLevelA
 
 Route::get('/calculate',[CalculateController::class,'index']);
 Route::post('/calculate',[CalculateController::class,'calculate'])->name('calculate');
+
+Route::get('/charts',[ChartDemoController::class,'home']);
+Route::get('/get-chart-data/{chartType}', [ChartDemoController::class, 'getChartData']);
 
 
