@@ -24,8 +24,10 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <canvas id="myChart"></canvas>
+        <div class="col-12 col-md-10 col-lg-8">
+            <div style="position: relative; height: 500px; width: 100%;">
+                <canvas id="myChart"></canvas>
+            </div>
         </div>
     </div>
 
@@ -48,7 +50,9 @@
 
             success: function(data) {
 
-                let actualChartType = chartType === 'area' ? 'line' : chartType;
+                let actualChartType = chartType === 'area'
+                    ? 'line'
+                    : chartType;
 
                 myChart = new Chart(ctx, {
                     type: actualChartType,
@@ -74,12 +78,13 @@
                                 'rgba(255, 159, 64, 1)'
                             ],
                             borderWidth: 1,
-                            fill: chartType === 'area'
+                            fill: chartType === 'area',
+                            tension: 0.4
                         }]
                     },
                     options: {
                         responsive: true,
-                        maintainAspectRatio: true,
+                        maintainAspectRatio: false,
                         scales: ['bar', 'line', 'area'].includes(chartType)
                             ? {
                                 y: {
@@ -97,7 +102,7 @@
         });
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         updateChart($('#chartType').val());
     });
 </script>
