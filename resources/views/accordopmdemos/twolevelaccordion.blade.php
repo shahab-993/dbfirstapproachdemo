@@ -32,6 +32,8 @@
     }
  </style>
  <div class="container">
+    <button class="btn btn-primary" type="button" onclick="toggleAll(1)">Expand All</button>
+    <button class="btn btn-primary" type="button" onclick="toggleAll(2)">collapse All</button>
     @foreach ($orders  as $order )
     <div class="" style="width: 97%;">
 
@@ -108,6 +110,17 @@
     }
 
 
+
+    }
+    function toggleAll(index){
+        if(index===1){
+            $('table[id*="OrderDetails-"]').show();
+            $('i[id*=Orderid"]').removeClass("fa-plus").addClass("fa-minus")
+        }
+        else if (index === 2 ){
+            $('table[id*="OrderDetails-"]').hide();
+            $('i[id*="OrderId"]')/removeClass("fa-minus").addClass("fa-plus");
+        }
 
     }
 </script>
